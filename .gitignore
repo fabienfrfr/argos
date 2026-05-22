@@ -1,3 +1,19 @@
+# Local data and environment files
+ollama_data/
+hermes_data/
+.env
+.DS_Store
+
+
+project_structure.json
+uv.lock
+
+
+# Logs and cache
+*.log
+__pycache__/
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
