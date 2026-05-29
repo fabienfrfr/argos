@@ -1,7 +1,22 @@
 #!/bin/bash
 
 # --- Configuration ---
-FULL_NAME="huihui_ai/qwen3.5-abliterated:2b"
+
+# Detect total RAM in GB
+RAM_GB=$(free -g | awk '/^Mem:/{print $2}')
+echo "Detected Free RAM: ${RAM_GB} GB"
+
+# Select model based on RAM
+if [ "$RAM_GB" -ge 26 ]; then
+  FULL_NAME="huihui_ai/Qwen3.6-abliterated:35b" # Qwen/Qwen3.6-35B-A3B 
+elif [ "$RAM_GB" -ge 13 ]; then
+  FULL_NAME="huihui_ai/qwen3.5-abliterated:2b"
+else
+  FULL_NAME="huihui_ai/qwen3.5-abliterated:0.8B"
+fi
+
+echo "Selected model: $FULL_NAME"
+
 ALIAS="wild-llm"
 SYSTEM_PROMPT="You are a direct assistant. Answer concisely and immediately. Immediately follow with a 5-word self-critique."
 # SYSTEM_PROMPT="You are a direct assistant. Answer in ONE sentence maximum. If using a tool, provide ONLY the tool call. Otherwise, follow with a 5-word self-critique."
@@ -21,9 +36,9 @@ until curl -s http://localhost:11434/api/tags > /dev/null; do
     sleep 2
 done
 
-# Ensure the base model is pulled
+# Ensure the base model is pulled ("run" used to get manifest)
 echo "Ensuring model $FULL_NAME is pulled..."
-ollama pull "$FULL_NAME"
+ollama run "$FULL_NAME" --think=false "ping" > /dev/null 2>&1
 
 # Create a custom model with the system prompt on the fly
 # We use a temporary Modelfile to inject the system instructions
