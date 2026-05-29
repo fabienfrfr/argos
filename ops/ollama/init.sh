@@ -2,17 +2,11 @@
 
 # --- Configuration ---
 
-# Detect total RAM in GB
-RAM_GB=$(free -g | awk '/^Mem:/{print $2}')
-echo "Detected Free RAM: ${RAM_GB} GB"
-
-# Select model based on RAM
-if [ "$RAM_GB" -ge 26 ]; then
-  FULL_NAME="huihui_ai/Qwen3.6-abliterated:35b" # Qwen/Qwen3.6-35B-A3B 
-elif [ "$RAM_GB" -ge 13 ]; then
+# Select model based on env var
+if [ "${TEST:-0}" -eq 1 ]; then
   FULL_NAME="huihui_ai/qwen3.5-abliterated:2b"
 else
-  FULL_NAME="huihui_ai/qwen3.5-abliterated:0.8B"
+  FULL_NAME="huihui_ai/Qwen3.6-abliterated:35b" # Qwen/Qwen3.6-35B-A3B 
 fi
 
 echo "Selected model: $FULL_NAME"

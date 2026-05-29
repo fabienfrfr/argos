@@ -3,6 +3,8 @@ services:
     build: ./ops/ollama
     container_name: argos-ollama
     restart: unless-stopped
+    env_file:
+      - .env
     devices:
       - /dev/dri:/dev/dri
     environment:
