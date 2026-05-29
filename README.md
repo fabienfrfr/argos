@@ -1,35 +1,72 @@
 # argos
 
-Autonomous local ML assistant powered by **AutoGluon** and **Hermes**.
+Autonomous local ML assistant powered by **Hermes**, **Ollama**, and **AutoGluon (MLZero)**. 
+
+> **🚧 WORK IN PROGRESS** 
+
+## Overview
+
+Argos is a self-hosted agent system that combines:
+
+* **Hermes** → agent orchestration + Web UI
+* **Ollama** → local LLM inference (with Vulkan)
+* **MLZero (AutoGluon MCP)** → ML/Data tool server
+
+Everything runs locally via Docker.
+
+
 
 ## Quick Start
 
-1. **Start services:**
+### 1. Start services (First time)
+
 ```bash
-docker compose up -d
+docker compose up -d --build
 ```
 
 
-2. **Pull the model:**
-   ```bash
-   docker exec -it argos-ollama ollama pull qwen3.5:9b
+
+
+### 2. Open the interface
+
+```
+http://localhost:8787
 ```
 
-3. **Access interface:**
-Open http://localhost:8080 in your browser.
 
-**Testing**
+## Basic Checks
 
+```bash
+# Hermes logs
 docker logs argos-hermes
+
+# Direct agent CLI
 docker exec -it argos-hermes hermes chat
+
+# Ollama API
 curl http://localhost:11434/api/tags
 
-## Components
+# Run model directly
+docker exec -it argos-ollama ollama run wild-llm --think=false
+```
 
-* **Ollama:** LLM runtime.
-* **MLZero (AutoGluon):** MCP tool server.
-* **Hermes:** Agent orchestration.
+
+
+## Key Design Choices
+
+* **Single container for Hermes + WebUI**
+  * avoids agent detection issues
+  * keeps state consistent (`~/.hermes`)
+* **Shared state volume**
+  * persistent memory, config, skills
+* **Gateway-based communication**
+  * WebUI talks to Hermes via API (`:8642`)
+
+
 
 ## Configuration
 
-All services are managed via docker-compose.yml. Use .env for custom environment variables.
+* `.env` → runtime variables
+* `docker-compose.yml` → orchestration
+* `ops/*` → service definitions
+

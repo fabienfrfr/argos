@@ -1,8 +1,13 @@
 # Local data and environment files
-ollama_data/
-hermes_data/
+
+data/*
+!data/__init__.py
+
+workspace/
+
 .env
 .DS_Store
+.vscode/
 
 
 project_structure.json
