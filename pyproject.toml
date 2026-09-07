@@ -5,6 +5,22 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "autogluon>=1.6.1",
+    "bentoml>=1.4.19",
+    "evidently>=0.7.21",
+    "fg-data-profiling>=4.19.1",
+    "marimo>=0.24.0",
+    "mlflow>=3.16.0",
     "pathspec>=1.1.1",
+    "plotly>=5.24.1",
     "pytest>=9.0.3",
+    "ruff>=0.16.6",
+    "sktime>=1.1.0",
 ]
+
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.format]
+quote-style = "double"

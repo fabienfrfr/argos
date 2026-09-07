@@ -127,9 +127,7 @@ def generate_json_from_code(root_dir: str, output_json_path: str) -> None:
 # --- CLI ---
 def main():
     parser = argparse.ArgumentParser(description="Code Mapper: Sync code and JSON.")
-    parser.add_argument(
-        "--from-json", nargs="?", const=DEFAULT_OUTPUT, help="JSON to Code."
-    )
+    parser.add_argument("--from-json", nargs="?", const=DEFAULT_OUTPUT, help="JSON to Code.")
     parser.add_argument("--to-json", nargs="*", help="Code to JSON [ROOT] [OUTPUT].")
 
     args = parser.parse_args()

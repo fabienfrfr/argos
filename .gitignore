@@ -2,6 +2,9 @@
 
 data/*
 !data/__init__.py
+!data/skab_dataset.csv
+
+/AutogluonModels
 
 workspace/
 

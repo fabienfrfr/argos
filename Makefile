@@ -24,7 +24,20 @@ COMPOSE_PROJECT_NAME=argos
 code-map: ## Export project structure to JSON
 	uv run python3 libs/code_mapper.py --to-json
 
+notebook: ## Working test
+	uv run marimo edit notebook.py
+
+jupyter: ## If you want to use Kaggle T4x2
+	uv run marimo check --fix notebook.py
+	uv run marimo export ipynb notebook.py -o notebook.ipynb
+
 ##@ Maintenance
+format:
+	uv run ruff format .
+
+lint: ## Check code style
+	uv run ruff check .
+
 clean: ## Remove python caches and temporary files
 	find . -type d -name "__pycache__" -exec rm -rf {} +
 	rm -rf .pytest_cache .venv .ruff_cache .mypy_cache
